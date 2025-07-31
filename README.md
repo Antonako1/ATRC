@@ -9,6 +9,8 @@ ATRC has wrappers implemented for:
  
 **[Full Documentation](https://github.com/Antonako1/ATRC/blob/main/docs/)**
 
+See [VSCode extension](https://github.com/Antonako1/ATRC-VSCode).
+
 ---
 
 ## Key Features
