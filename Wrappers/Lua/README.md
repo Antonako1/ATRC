@@ -13,7 +13,7 @@ ATRCLua.so is compiled with GCC
 To use ATRC in Lua:
 
  - Create a "libs" directory
- - Copy ATRC.dll and ATRCLua.dll or ATRC.so and ATRCLua.so to there
+ - Copy ATRC.dll and ATRCLua.dll or libATRC.so and libATRCLua.so to there
  - Add the libs directory into environmental variables "PATH" and "LUA_CPATH"
 
 ```lua
