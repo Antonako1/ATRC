@@ -234,7 +234,6 @@ bool AddVariable(PATRC_FD fd, const char* varname, const char* value) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Variable array allocating error", fd->Filename);
         return false;
 	}
-
     fd->VariableArray.Variables = temp;
     PVariable new_var = &fd->VariableArray.Variables[fd->VariableArray.VariableCount];
     new_var->Name = __STRDUP(varname);
@@ -280,7 +279,6 @@ bool RemoveVariable(PATRC_FD fd, const char* varname) {
         _ATRC_WRAP_ERRORMSG(ERR_VAR_NOT_FOUND, -1, varname, fd->Filename);
         return false;
 	}
-
 	PVariable var = &fd->VariableArray.Variables[index];
     __ATRC_FREE_MEMORY_EX(var->Name);
 	__ATRC_FREE_MEMORY_EX(var->Value);
@@ -547,7 +545,7 @@ bool Read(PATRC_FD fd, const char* path, ReadMode mode) {
         fd->Filename = NULL;
     }
     fd->Filename = __STRDUP(path);
-    return _ATRC_WRAP_READ(fd, path, mode);
+    return _ATRC_WRAP_READ(fd, fd->Filename, mode);
 }
 
 PATRC_FD Create_ATRC_FD(const char *filename, ReadMode mode){
@@ -556,6 +554,11 @@ PATRC_FD Create_ATRC_FD(const char *filename, ReadMode mode){
         return NULL;
 	}
     fd->Filename = __STRDUP(filename);
+    if(fd->Filename == NULL) {
+        _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Filename allocating error", "Create_ATRC_FD");
+        Destroy_ATRC_FD(fd);
+        return NULL;
+	}
     if(!Read(fd, filename, mode)) {
         Destroy_ATRC_FD(fd);
         return NULL;

@@ -5,7 +5,8 @@ ATRC is a robust **C configuration library**, designed for high-performance appl
 ATRC has wrappers implemented for:
  - C#. See its [project root](https://github.com/Antonako1/ATRC/tree/main/Wrappers/C%23) or [NuGet gallery](https://www.nuget.org/packages/ATRC/)
  - C++. See its [project root](https://github.com/Antonako1/ATRC/tree/main/Wrappers/C%2B%2B). This wrapper is automatically included in the prebuilt packages as ATRC.hpp
-
+ - Lua. See its [project root](https://github.com/Antonako1/ATRC/tree/main/Lua). Download prebuilt binaries from [Releases](https://github.com/Antonako1/ATRC/releases) or build them yourself. See the README inside Lua directory
+ 
 **[Full Documentation](https://github.com/Antonako1/ATRC/blob/main/docs/)**
 
 ---
@@ -88,7 +89,7 @@ project(MyProject VERSION 1.0 LANGUAGES C)
 add_executable(MyProject "main.c")
 
 # Add ATRC
-set(ATRC_DIR "path/to/ATRC-2.3.1_{BUILD}/cmake")
+set(ATRC_DIR "path/to/ATRC-2.3.2_{BUILD}/cmake")
 find_package(ATRC REQUIRED)
 target_link_libraries(MyProject PRIVATE ATRC::ATRC)
 ```

@@ -16,7 +16,6 @@ if(MSVC)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif()
 
-# 
 add_compile_definitions(ATRC_EXPORTS)
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")

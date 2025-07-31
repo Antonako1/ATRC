@@ -82,4 +82,8 @@ ECHO Starting NUGET packaging...
 call "%PROJECT_ROOT%\scripts\build_cs.bat"
 echo NUGET package can be found in "%PROJECT_ROOT%\ATRC-%VERSION%_%BUILDNUMBER%.nupkg"
 
+ECHO Compiling Lua wrapper...
+call "%PROJECT_ROOT%\scripts\build_lua.bat"
+ECHO Lua wrapper can be found in "%PROJECT_ROOT%\ATRCLua-%VERSION%_%BUILDNUMBER%"
+
 endlocal

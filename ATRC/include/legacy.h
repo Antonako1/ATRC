@@ -95,12 +95,12 @@ public:
     PROXY_ATRC_FD operator[](const std::string& key);
     PROXY_ATRC_FD operator[](const std::string& key) const;
 
+    std::vector<CPP_Variable> Variables;
+    std::vector<CPP_Block> Blocks;
 private:
     void MAINCONSTRUCTOR();
     bool AutoSave;
     bool Writecheck;
-    std::vector<CPP_Variable> Variables;
-    std::vector<CPP_Block> Blocks;
     std::string Filename;
     bool safeToUse;
 };

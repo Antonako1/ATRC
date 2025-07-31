@@ -539,6 +539,11 @@ bool check_and_add_block(std::string &curr_block, std::vector<CPP_Block> &blocks
     return true;
 }
 bool check_and_add_key(std::string &line_trim, std::vector<CPP_Block> &blocks, REUSABLE &reus, std::vector<CPP_Variable> &vars, RAW_STRING &raw_str){
+    if(blocks.empty()) {
+        errormsg(ERR_INVALID_KEY_DECL, (int)reus.line_number, "", reus.filename);
+        return false;
+    }
+    
     for(auto &block : blocks) {
         if(block.Name == line_trim) {
             errormsg(ERR_REREFERENCED_KEY, (int)reus.line_number, block.Name, reus.filename);
@@ -555,7 +560,7 @@ bool check_and_add_key(std::string &line_trim, std::vector<CPP_Block> &blocks, R
     _key_name = line_trim.substr(0, _equ_pos);
     trim(_key_name);
     _key_value = line_trim.substr(_equ_pos + 1);
-    if(raw_str.is_active == CREATE_RAW_STRING) {
+    if(raw_str.is_active == CREATE_RAW_STRING || raw_str.is_active == RAW_STR_INACTIVE) {
         ParseLineValueATRCtoSTRING(_key_value, reus, vars, raw_str);
     }
     CPP_Key _key;
@@ -921,7 +926,7 @@ void add_to_top_of_file(std::string line_to_add, std::string &final_data, const 
         }
         bool skip_line = false;
         for(char c : add_after_chars) {
-            if(line_trim[0] == c) {
+            if(line_trim[0] == c || line_trim.empty()) {
                 final_data += line + "\n";
                 skip_line = true;
                 break;
@@ -961,7 +966,7 @@ void _W_Save_(CPP_ATRC_FD *filedata, const ATRC_SAVE &action, const int &xtra_in
     case ATRC_SAVE::FULL_SAVE: {} break;
     case ATRC_SAVE::ADD_BLOCK: {
         std::string block = "[" + xtra_info2 + "]\n";
-        add_to_top_of_file(block, final_data, {'#', '%', '<'}, file, ln_num);
+        add_to_top_of_file(block, final_data, {'#', '%', '<', ' '}, file, ln_num);
         file.close(); 
         save_final_data(filedata->GetFilename(), final_data);
     } break;
@@ -1135,22 +1140,38 @@ void _W_Save_(CPP_ATRC_FD *filedata, const ATRC_SAVE &action, const int &xtra_in
     } break;
     case ATRC_SAVE::ADD_VAR: {
         std::string var_line = xtra_info2+"\n";
-        add_to_top_of_file(var_line, final_data, {'#'}, file, ln_num);
+        add_to_top_of_file(var_line, final_data, {'#', ' '}, file, ln_num);
         file.close(); 
         save_final_data(filedata->GetFilename(), final_data);
     } break;
     case ATRC_SAVE::REMOVE_VAR: {
         int var_line_num = 0;
+        bool var_found = false;
         while(std::getline(file, line)){
             reus.line_number = var_line_num++;
+            if(var_found){
+                final_data += line + "\n";
+                continue;
+            }
             std::string trim_line = line;
             trim(trim_line);
             if(trim_line[0] == '%'){
                 size_t equ_pos = trim_line.find_first_of('=');
-                std::string variable_name = trim_line.substr(0, equ_pos-1);
+                std::string variable_name = trim_line.substr(0, equ_pos);
+                // Remove the '%' at the start and end of the variable name
                 trim(variable_name);
-                _W_ParseLineValueATRCtoSTRING(line, reus, (filedata->GetVariables()));
-                if(variable_name == "%" + xtra_info2 + "%"){
+                // Remove the '%' at the end of the variable name
+                if(variable_name.back() == '=') {
+                    variable_name.pop_back();
+                }
+                if(variable_name.back() == '%') {
+                    variable_name.pop_back();
+                }
+                if(variable_name.front() == '%') {
+                    variable_name.erase(0, 1); // Remove the '%' at the start
+                }
+                if(variable_name == xtra_info2){
+                    var_found = true;
                     continue;
                 }
             }
@@ -1161,18 +1182,34 @@ void _W_Save_(CPP_ATRC_FD *filedata, const ATRC_SAVE &action, const int &xtra_in
     } break;
     case ATRC_SAVE::MODIFY_VAR: {
         int var_line_num = 0;
+        bool var_found = false;
         while(std::getline(file, line)){
             reus.line_number = var_line_num++;
             std::string trim_line = line;
             trim(trim_line);
             if(trim_line[0] == '%'){
                 size_t equ_pos = trim_line.find_first_of('=');
-                std::string variable_name = trim_line.substr(0, equ_pos-1);
+                std::string variable_name = trim_line.substr(0, equ_pos);
                 trim(variable_name);
-                std::vector<CPP_Variable> args = filedata->GetVariables(); // TODO: Improve, no memory copying in future
-                _W_ParseLineValueATRCtoSTRING(line, reus, args);
-                if(variable_name == "%" + xtra_info2 + "%"){
-                    final_data += args.at((size_t)xtra_info).Name +"="+ args.at((size_t)xtra_info).Value + "\n";
+                // Remove the '%' at the start and end of the variable name
+                if(variable_name.back() == '=') {
+                    variable_name.pop_back();
+                }
+                if(variable_name.back() == '%') {
+                    variable_name.pop_back();
+                }
+                if(variable_name.front() == '%') {
+                    variable_name.erase(0, 1); // Remove the '%' at the start
+                }
+                std::vector<CPP_Variable> args = filedata->Variables;
+                if(variable_name == xtra_info2){
+                    if(args.at((size_t)xtra_info).IsPublic == false) {
+                        var_found = true;
+                        final_data += line + "\n";
+                        continue;
+                    }
+                    final_data += '%' + args.at((size_t)xtra_info).Name +"%="+ args.at((size_t)xtra_info).Value + "\n";
+                    var_found = true;
                     continue;
                 }
             }

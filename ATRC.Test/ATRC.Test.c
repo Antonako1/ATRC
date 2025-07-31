@@ -202,5 +202,20 @@ int main(int argc, char *argv[]) {
     __ATRC_FREE_MEMORY_EX(res);
 	Destroy_ATRC_FD(fd);
     */
+    PATRC_FD fd = Create_ATRC_FD("../../../ATRC.Test/test.atrc", ATRC_READ_ONLY);
+    if (fd == NULL) {
+        return 1;
+    }
+    fd->AutoSave = true;
+    AddBlock(fd, "NewBlock");
+    bool exists = DoesExistBlock(fd, "NewBlock");
+    if (exists) {
+        printf("Block 'NewBlock' exists.\n");
+    } else {
+        printf("Block 'NewBlock' does not exist.\n");
+    }
+    WriteCommentToBottom(fd, "This is a comment at the bottom.");
+    Destroy_ATRC_FD(fd);
+
     return cpp_main();
 }

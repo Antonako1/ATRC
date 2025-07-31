@@ -509,7 +509,7 @@ ATRC_API bool AddVariable(PATRC_FD fd, const char* varname, const char* value);
 
 **Example:**
 ```c
-if (AddVariable(fd, "app_version", "2.3.1")) {
+if (AddVariable(fd, "app_version", "2.3.2")) {
     printf("Variable 'app_version' added\n");
 }
 ```

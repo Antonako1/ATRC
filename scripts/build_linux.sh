@@ -38,7 +38,7 @@ for preset in "${presets[@]}"; do
 
     # Determine build type and architecture
     build_type=$( [[ "$preset" == *"debug"* ]] && echo "Debug" || echo "Release" )
-    atrc_arch=$( [[ "$preset" == *"x86"* ]] && echo "x86" || echo "x64" )
+    atrc_arch=$( echo "x64" )
     toolchain_file="${PROJECT_ROOT}/cmake/toolchain-linux-${atrc_arch}.cmake"
     
     # Generate build files
@@ -67,7 +67,7 @@ for preset in "${presets[@]}"; do
     # Copy built library files to the output directory
     echo "Copying .so files to ${ATRC_DIR}/Linux/${atrc_arch}/${build_type}"
 
-    cp -r "${OUT_DIR}/${preset}/build/ATRC/"libATRC.so "${ATRC_DIR}/Linux/${atrc_arch}/${build_type}/libATRC-${atrc_arch}.so"
+    cp -r "${OUT_DIR}/${preset}/build/ATRC/libATRC.so" "${ATRC_DIR}/Linux/${atrc_arch}/${build_type}/libATRC.so"
 done
 
 # Handle build errors

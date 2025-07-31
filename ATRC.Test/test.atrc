@@ -1,2 +1,5 @@
 #!ATRC
 %test%=10
+[NewBlock]
+
+#This is a comment at the bottom.

@@ -3,17 +3,20 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <PackageId>ATRC</PackageId>
+    <PackageName>ATRCWrapper</PackageName>
     <Authors>Antonako</Authors>
     <Description>ATRC native library wrapper</Description>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <PackageReadmeFile>README.md</PackageReadmeFile> <!-- NEW -->
     <PackageProjectUrl>https://github.com/Antonako1/ATRC/tree/main/Wrappers/C%23</PackageProjectUrl> <!-- NEW -->
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/Antonako1/ATRC</RepositoryUrl> <!-- NEW -->
     <RepositoryType>git</RepositoryType> <!-- NEW -->
     <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression> <!-- NEW -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
+	<Platforms>x64</Platforms>
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
     <PackageTags>config;wrapper;native;resourcefile;configfile;configurationfile</PackageTags>
@@ -26,24 +29,18 @@
     <None Include="bin\Release\net8.0\ATRC.xml" Pack="true" PackagePath="lib\net8.0" />
     <None Include="../README.md" PackagePath="" Pack="true" /> <!-- NEW -->
     <None Include="../../../LICENSE.txt" PackagePath="" Pack="true" /> <!-- NEW -->
-    <!-- Windows x64 -->
-    <None Include="..\lib\Windows\x64\Release\ATRC-x64.dll">
-      <Pack>true</Pack>
-      <PackagePath>runtimes/win-x64/native/ATRC-x64.dll</PackagePath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
 
-    <!-- Windows x86 -->
-    <None Include="..\lib\Windows\Win32\Release\ATRC-Win32.dll">
+    <!-- Windows x64 -->
+    <None Include="..\lib\Windows\x64\Release\ATRC.dll">
       <Pack>true</Pack>
-      <PackagePath>runtimes/win-x86/native/ATRC-Win32.dll</PackagePath>
+      <PackagePath>runtimes/win-x64/native/ATRC.dll</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 
     <!-- Linux x64 -->
-    <None Include="..\lib\Linux\x64\Release\libATRC-x64.so">
+    <None Include="..\lib\Linux\x64\Release\libATRC.so">
       <Pack>true</Pack>
-      <PackagePath>runtimes/linux-x64/native/libATRC-x64.so</PackagePath>
+      <PackagePath>runtimes/linux-x64/native/libATRC.so</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

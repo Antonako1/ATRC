@@ -15,9 +15,13 @@ if "%1" == "DEL" (
     for /d %%D in ("%PROJECT_ROOT%\%FOLDER%_*") do (
         RMDIR /S /Q "%%D"
     )
+    for /d %%D in ("%PROJECT_ROOT%\ATRCLua_*") do (
+        RMDIR /S /Q "%%D"
+    )
     del "*.zip"
     del "*.tar.gz"
     del "*.7z"
+    del "*.nupkg"
 )
 
 

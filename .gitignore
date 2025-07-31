@@ -2,6 +2,7 @@ libs/
 build/
 ATRC_*/
 ATRC-*/
+ATRCLua-*/
 lib/
 ATRC/Readme.txt
 ATRC/License.txt

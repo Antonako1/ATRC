@@ -144,8 +144,13 @@ void _ATRC_WRAP__W_SAVE(PATRC_FD self, const size_t action, const size_t xtra_in
         _W_Save_(&fd, (ATRC_SAVE)action, (int)xtra_info, ParseLineSTRINGtoATRC(varname));
     }
     else {
-        _W_Save_(&fd, (ATRC_SAVE)action, (int)xtra_info, varname, xtra_info4, xtra_info5);
+        std::string varname_str = varname == NULL ? std::string() : std::string(varname);
+        std::string xtra_info4_str = xtra_info4 == NULL ? std::string() : std::string(xtra_info4);
+        std::string xtra_info5_str = xtra_info5 == NULL ? std::string() : std::string(xtra_info5);
+        _W_Save_(&fd, (ATRC_SAVE)action, (int)xtra_info, varname_str, xtra_info4_str, xtra_info5_str);
     }
+    fd.SetAutoSave(false);
+    return;
 }
 
 /* INSERT_VAR */

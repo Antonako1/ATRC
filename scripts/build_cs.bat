@@ -11,13 +11,13 @@ echo Copying libraries to lib directory...
 XCOPY %OUTPUT_DIR%\Windows\* lib\Windows\ /E /I /Y
 XCOPY %OUTPUT_DIR%\Linux\* lib\Linux\ /E /I /Y
 
-set PROJECT=ATRC\ATRC.csproj
+set PROJECT=ATRCWrapper\ATRCWrapper.csproj
 
-rmdir /S /Q ATRC\nupkg
+rmdir /S /Q ATRCWrapper\nupkg
 
 set PACKAGE_NAME=ATRC-%VERSION%_%BUILD_VERSION%.nupkg
 echo Building package: %PACKAGE_NAME%
-dotnet pack ATRC -c Release /p:Version=%VERSION%
-ren ATRC\nupkg\ATRC.*.nupkg %PACKAGE_NAME%
-copy /Y/B ATRC\nupkg\%PACKAGE_NAME% %PROJECT_ROOT%\%PACKAGE_NAME%
+dotnet pack ATRCWrapper -c Release /p:Version=%VERSION%
+ren ATRCWrapper\nupkg\ATRC.*.nupkg %PACKAGE_NAME%
+copy /Y/B ATRCWrapper\nupkg\%PACKAGE_NAME% %PROJECT_ROOT%\%PACKAGE_NAME%
 endlocal

@@ -84,34 +84,6 @@ namespace ATRCNative
         
         internal const string LIB = "ATRC";
 
-        static ATRC_Native()
-        {
-            NativeLibrary.SetDllImportResolver(typeof(ATRC_Native).Assembly, ResolveLibrary);
-        }
-
-        private static IntPtr ResolveLibrary(string libraryName, System.Reflection.Assembly assembly, DllImportSearchPath? searchPath)
-        {
-            if (libraryName != LIB)
-                return IntPtr.Zero;
-
-            string basePath = AppContext.BaseDirectory;
-
-            string mappedName =
-                RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                    ? (Environment.Is64BitProcess ? "ATRC-x64.dll" : "ATRC-Win32.dll")
-                    : (Environment.Is64BitProcess ? "libATRC-x64.so" : "libATRC.so"); // Adjust if you also support ARM etc.
-
-            string fullPath = System.IO.Path.Combine(basePath, mappedName);
-
-            if (!System.IO.File.Exists(fullPath))
-                throw new DllNotFoundException($"Could not find native library at: {fullPath}");
-
-            return NativeLibrary.Load(fullPath);
-        }
-
-        
-
-
         [LibraryImport(LIB, EntryPoint = "Create_Empty_ATRC_FD")]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
         internal static partial IntPtr Create_Empty_ATRC_FD();
@@ -258,10 +230,24 @@ namespace ATRCNative
 
 namespace ATRC
 {
+    /// <summary>
+    /// Enumeration for the read modes of ATRC files.
+    /// </summary>
     public enum ReadMode
     {
+        /// <summary>
+        /// Reads file if it exists
+        /// </summary>
         ATRC_READ_ONLY,
+
+        /// <summary>
+        /// Reads file if it exists, otherwise creates a new file
+        /// </summary>
         ATRC_CREATE_READ,
+
+        /// <summary>
+        /// Deletes the file if it exists and creates a new one
+        /// </summary>
         ATRC_FORCE_READ
     }
 }

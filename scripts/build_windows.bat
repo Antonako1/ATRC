@@ -59,12 +59,12 @@ echo Build succeeded for %ARCH% %BUILD_TYPE%.
 REM Copy files to the output directory
 echo Copying files to output directory...
 set SOURCE_DIR=%BUILD_DIR%\ATRC\%BUILD_TYPE%
-COPY /Y/B "%SOURCE_DIR%\ATRC.lib" "%TARGET_DIR%\ATRC-%ARCH%.lib"
-COPY /Y/B "%SOURCE_DIR%\ATRC.exp" "%TARGET_DIR%\ATRC-%ARCH%.exp"
-COPY /Y/B "%SOURCE_DIR%\ATRC.dll" "%TARGET_DIR%\ATRC-%ARCH%.dll"
+COPY /Y/B "%SOURCE_DIR%\ATRC.lib" "%TARGET_DIR%\ATRC.lib"
+COPY /Y/B "%SOURCE_DIR%\ATRC.exp" "%TARGET_DIR%\ATRC.exp"
+COPY /Y/B "%SOURCE_DIR%\ATRC.dll" "%TARGET_DIR%\ATRC.dll"
 
 if "%BUILD_TYPE%"=="Debug" (
-    COPY /Y/B "%SOURCE_DIR%\ATRC.pdb" "%TARGET_DIR%\ATRC-%ARCH%.pdb"
+    COPY /Y/B "%SOURCE_DIR%\ATRC.pdb" "%TARGET_DIR%\ATRC.pdb"
 )
 
 exit /b 0

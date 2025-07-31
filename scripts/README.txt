@@ -10,8 +10,9 @@ ATRC:
 
 build_and_package.bat
     - Builds the release package
-    - Following are required to be installed and found in the path: CMake, 7z, debian, C/C++ compiler
-    - Debian should have CMake and CLang installed
+    - Following are required to be installed and found in the path: CMake, 7z, WSL distro, C/C++ compiler
+    - WSL distro can be changed inside the script. Default: debian
+    - WSL Distro should have CMake, Ninja and CLang installed
 
 
 build_linux.sh
@@ -24,7 +25,7 @@ build_windows.bat
 
 run_test.bat
     - Runs the C/C++ test project
-    - Following are required to be installed and found in the path: CMake, 7z, debian, C/C++ compiler
+    - Following are required to be installed and found in the path: CMake, 7z, C/C++ compiler
 
 
 
@@ -34,5 +35,9 @@ build_cs.bat
     - Builds C# project into a nuget package
     - Following are required to be installed and found in the path: dotnet sdk 8.0, nuget
 
-build_cpp.bat
-    - Builds C++ wrapper into a release package
+build_lua.bat
+    - Builds Lua wrapper into its own release package
+    - Following are required to be installed and found in the path: CMake, 7z, debian, C/C++ compiler
+    - WSL distro can be changed inside the script. Default: debian
+    - WSL Distro should have CMake, Ninja and C compiler installed
+    - See Wrappers\Lua\README.md for prequsities on the libraries that need to be found here

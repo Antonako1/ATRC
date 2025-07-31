@@ -1,0 +1,9 @@
+#!ATRC
+
+
+%testVar%=QUQU
+<%InternalKey%=a
+
+[ReadyBlock]
+ReadyKey=%testVar%. KEY!
+Inserts=%*%, %*%
