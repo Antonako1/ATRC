@@ -28,7 +28,7 @@ namespace ATRC
     {
 
         private IntPtr _fd = IntPtr.Zero;
-        private bool _disposed;
+        private bool _disposed = false;
 
         /// <summary>
         /// Initializes a new empty ATRC file (no file path associated).
@@ -190,6 +190,7 @@ namespace ATRC
 
                 _disposed = true;
             }
+            _disposed = false;
         }
 
         /// <summary>
