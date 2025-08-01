@@ -4,7 +4,7 @@ ATRC++ is a single include file wrapper for ATRC.h that automatically manages me
 
 C++17 is required
 
-See [API C documenation](https://github.com/Antonako1/ATRC/blob/main/docs/c_api.md). The functions are the same, arguments differ.
+See [API C documenation](https://github.com/Antonako1/ATRC/blob/main/docs/c_api.md) for documentation. The functions are the same, arguments differ. Every function also contains comments on top of them about them
 
 ## Basic Example
 
