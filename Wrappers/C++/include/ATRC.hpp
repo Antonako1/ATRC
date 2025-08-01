@@ -14,7 +14,7 @@ Author(s):
 Maintained at https://github.com/Antonako1/ATRC
 ---*/
 
-#include <ATRC.h>
+#include <ATRC/ATRC.h>
 #ifndef ATRC_HPP
 #define ATRC_HPP
 #ifdef __cplusplus
@@ -454,20 +454,6 @@ namespace atrc {
             }
         }
 
-        /// @brief Sets the filename of the ATRC_FD.
-        /// @param filename The new filename.
-        /// @note This does not read the file. For that use _ReadAgain() or _Read()
-        /// @note This will free the previous filename if it exists.
-        /// @note If the ATRC_FD is nullptr, it will not set the filename
-        void _SetFilename(const std::string& filename) {
-            if (m_fd != nullptr) {
-                if (m_fd->Filename != nullptr) {
-                    ATRC_FREE_MEMORY(m_fd->Filename);
-                }
-                m_fd->Filename = __STRDUP(filename.c_str());
-            }
-        }
-
         /// @brief Gets the filename of the ATRC_FD.
         /// @return The filename of the ATRC_FD.
         std::string _GetFilename() const {
@@ -495,6 +481,16 @@ namespace atrc {
             return PROXY_ATRC_FD(const_cast<_ATRC_FD&>(*this), key);
         }
     private:
+        /// @brief Private method. Used only internally. This COULD corrupt HEAP memory if used incorrectly.
+        /// @param filename New filename to set.
+        void _SetFilename(const std::string& filename) {
+            if (m_fd != nullptr) {
+                if (m_fd->Filename != nullptr) {
+                    ATRC_FREE_MEMORY(m_fd->Filename);
+                }
+                m_fd->Filename = __STRDUP(filename.c_str());
+            }
+        }
         PATRC_FD m_fd;
     };
 

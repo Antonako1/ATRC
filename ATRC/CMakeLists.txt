@@ -18,7 +18,7 @@ endif()
 
 add_compile_definitions(ATRC_EXPORTS)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/include/ATRC")
 target_include_directories(ATRC PUBLIC ${CMAKE_BINARY_DIR}/exports)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set(CMAKE_CXX_STANDARD 17)

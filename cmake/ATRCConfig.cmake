@@ -9,7 +9,7 @@
 #   target_link_libraries(MyProject PRIVATE ATRC::ATRC)
 
 set(ATRC_FOUND TRUE)
-set(ATRC_VERSION 2.3.2)
+set(ATRC_VERSION 2.3)
 
 set(ATRC_ROOT "${CMAKE_CURRENT_LIST_DIR}/..")
 set(ATRC_INCLUDE_DIR "${ATRC_ROOT}/include")

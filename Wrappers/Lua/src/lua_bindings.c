@@ -1,4 +1,4 @@
-#include <ATRC.h>
+#include <ATRC/ATRC.h>
 #include "../libs/Lua/include/lua.h"
 #include "../libs/Lua/include/lauxlib.h"
 #include "../libs/Lua/include/lualib.h"
