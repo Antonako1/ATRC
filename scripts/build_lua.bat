@@ -19,7 +19,6 @@ set OUTPUT_DIR=%PROJECT_ROOT%\ATRCLua-%VERSION%_%BUILD_VERSION%
 mkdir %OUTPUT_DIR%
 
 mkdir %OUTPUT_DIR%\libs
-XCOPY libs %OUTPUT_DIR%\libs /E /I /Y
 COPY /Y/B build\Release\ATRCLua.dll %OUTPUT_DIR%\libs\ATRCLua.dll
 
 rmdir /S/Q build
@@ -33,7 +32,15 @@ XCOPY test %OUTPUT_DIR%\example /E /I /Y
 
 
 copy /Y .\README.md %OUTPUT_DIR%\README.md
-copy /Y .\docs.md %OUTPUT_DIR%\docs.md
+
+mkdir %OUTPUT_DIR%\docs
+copy /Y .\docs.md %OUTPUT_DIR%\docs\lua_api.md
+copy /Y %PROJECT_ROOT%\docs\*.md %OUTPUT_DIR%\docs\
+
+copy /Y %PROJECT_ROOT%\LICENSE.txt %OUTPUT_DIR%\LICENSE.txt
+copy /Y %PROJECT_ROOT%\project\CHANGELOG.txt %OUTPUT_DIR%\CHANGELOG.txt
+copy /Y %PROJECT_ROOT%\project\VERSION %OUTPUT_DIR%\VERSION.txt
+copy /Y %PROJECT_ROOT%\project\BUILDNUMBER %OUTPUT_DIR%\BUILDNUMBER.txt
 
 7z a -t7z "%PROJECT_ROOT%\ATRCLua-%VERSION%_%BUILD_VERSION%.7z" "%OUTPUT_DIR%\*" -r
 

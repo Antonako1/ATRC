@@ -40,7 +40,7 @@ cd "%PROJECT_ROOT%\scripts"
 call %WSL_DISTRO% run "./build_linux.sh"
 
 REM Copy include files
-copy "%PROJECT_ROOT%\ATRC\include\ATRC.h" "%OUTPUT_DIR%\include" /Y
+copy "%PROJECT_ROOT%\ATRC\include\ATRC.h" "%OUTPUT_DIR%\include\ATRC" /Y
 
 REM Copy CMake configuration
 copy "%PROJECT_ROOT%\cmake\ATRCConfig.cmake" "%OUTPUT_DIR%\cmake" /Y
@@ -59,8 +59,8 @@ REM Copy LICENSE file
 copy "%PROJECT_ROOT%\LICENSE" "%OUTPUT_DIR%" /Y
 REM Copy docs folder
 xcopy "%PROJECT_ROOT%\docs" "%OUTPUT_DIR%\docs" /E /I /Y
-REM Copy changelog
-copy "%PROJECT_ROOT%\project\CHANGELOG" "%OUTPUT_DIR%" /Y
+REM Copy CHANGELOG.txt
+copy "%PROJECT_ROOT%\project\CHANGELOG.txt" "%OUTPUT_DIR%" /Y
 REM Copy README.md
 copy "%PROJECT_ROOT%\README.md" "%OUTPUT_DIR%" /Y
 
