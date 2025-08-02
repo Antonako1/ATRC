@@ -76,13 +76,30 @@ cmake --build .
 
 ### Testing the bindings
 
-After building the bindings, go to ".\test" and create a directory named "libs".
-Copy ATRCLua library from the previous build directory here and the ATRC library from .\libs\ATRC.
-
-Go back inside .\test\libs and add it into LUA_CPATH environmental variable ```SET LUA_CPATH=%CD%\libs\?.dll;%LUA_CPATH%``` on Windows or ```export LUA_CPATH="$(pwd)/?.so;$LUA_CPATH"``` on Linux
-
-To test the Lua bindings, run:
+1. Inside the test directory, create a libs folder:
+```bash
+mkdir test/libs
 ```
+
+2. Copy the compiled ATRCLua.so from the build folder into test/libs.
+
+3. Also copy the libATRC.so from libs/ATRC/Linux/x64/Release into test/libs.
+
+4. Set environment variables and run the test:
+
+- On Linux:
+
+```bash
+export LUA_CPATH="$(pwd)/libs/?.so;;"
+export LD_LIBRARY_PATH="$(pwd)/libs:$LD_LIBRARY_PATH"
+cd test
+lua test.lua
+```
+- On Windows (Command Prompt):
+
+```bash
+SET "LUA_CPATH=%CD%\libs\?.dll;%LUA_CPATH%"
+SET "PATH=%CD%\libs;%PATH%"
 cd test
 lua54 test.lua
 ```

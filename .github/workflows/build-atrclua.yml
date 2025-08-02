@@ -1,0 +1,52 @@
+name: Build ATRCLua on Linux
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y clang lld cmake ninja-build p7zip-full wget lua5.4
+
+      - name: Prepare folder structure
+        run: mkdir -p libs
+
+      - name: Setup ATRC and Lua binaries
+        working-directory: Wrappers/Lua
+        run: |
+          # Download and extract ATRC
+          wget https://github.com/Antonako1/ATRC/releases/download/vATRC-2.4_66/ATRC-2.4_66.7z
+          7z x ATRC-2.4_66.7z
+          rm ATRC-2.4_66.7z
+          mv ATRC-2.4_66 ATRC
+
+          # Download and extract Lua
+          wget https://sourceforge.net/projects/luabinaries/files/5.4.2/Linux%20Libraries/lua-5.4.2_Linux68_64_lib.tar.gz/download -O lua.tar.gz
+          tar -xzf lua.tar.gz -C ../../libs
+          rm lua.tar.gz
+          mv ../../libs/lua-5.4.2_Linux68_64_lib ../../libs/lua
+
+      - name: Configure CMake
+        working-directory: Wrappers/Lua
+        run: cmake -S . -B build -G Ninja
+
+      - name: Build
+        working-directory: Wrappers/Lua
+        run: cmake --build build
+
+      - name: Run tests
+        working-directory: Wrappers/Lua
+        run: |
+          export LUA_CPATH="$(pwd)/build/?.so;;"
+          export LD_LIBRARY_PATH="$(pwd)/ATRC/Linux/x64/Release:$LD_LIBRARY_PATH"
+          cd test
+          lua5.4 test.lua
