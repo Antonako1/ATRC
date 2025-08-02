@@ -1,6 +1,6 @@
 #include "ATRC.Test.h"
 #include <iostream>
-#include "../Wrappers/C++/include/ATRC.hpp"
+#include "../Wrappers/C++/include/ATRC/ATRC.hpp"
 
 int cpp_main(void)
 {
