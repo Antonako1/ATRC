@@ -18,7 +18,20 @@ endif()
 
 add_compile_definitions(ATRC_EXPORTS)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+# Only on gcc or clang
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fPIC")
+endif()
+
+target_include_directories(ATRC
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/ATRC
+        ${CMAKE_BINARY_DIR}/exports
+)
+
 target_include_directories(ATRC PUBLIC ${CMAKE_BINARY_DIR}/exports)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set(CMAKE_CXX_STANDARD 17)

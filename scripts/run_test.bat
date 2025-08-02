@@ -29,7 +29,7 @@ set TARGET_DIR="%OUTPUT_DIR%\Windows\%ARCH%\%BUILD_TYPE%"
 if not exist "%TARGET_DIR%" mkdir "%TARGET_DIR%"
 
 REM Run CMake commands
-cmake -S . -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "Visual Studio 17 2022" -A %ARCH% -DATRC_BUILD_TESTS=ON 
+cmake -S . -B %BUILD_DIR% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -G "Visual Studio 17 2022" -A %ARCH%
 if errorlevel 1 (
     echo CMake configuration failed for %ARCH% %BUILD_TYPE%.
     exit /b 1

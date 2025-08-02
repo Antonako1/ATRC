@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "./include/ATRC.h"
+#include "./include/ATRC/ATRC.h"
 #include "./include/filer.h"
 #include <iostream>
 #include <string>

@@ -159,7 +159,7 @@ OS=LINUX
 ### Miscellaneous
 
 - .DEFINE {NAME}={VALUE}
-    - For now, definitions can be defined but not accessed. It will be added in version `2.3.2`.
+    - For now, definitions can be defined but not accessed. It will be added in version `2.3`.
 - .UNDEF {NAME}
     - Undefines a defined value.
 - .IGNORE {NUM}

@@ -3,7 +3,7 @@ NOTE: This file is used only internaly as of now.
 ---*/
 
 #define _CRT_SECURE_NO_DEPRECATE
-#include "./include/ATRC.h"
+#include "./include/ATRC/ATRC.h"
 #include "./include/filer.h"
 #include <iostream>
 #include <cstring>
@@ -80,7 +80,7 @@ PATRC_FD CPP_ATRC_FD::ToCStruct() {
 	fd->Filename = __STRDUP(this->Filename.c_str());
 
 	fd->VariableArray.VariableCount = (uint64_t)this->Variables.size();
-	fd->VariableArray.Variables = (PVariable)malloc(fd->VariableArray.VariableCount * sizeof(Variable));
+	fd->VariableArray.Variables = (PVariable)malloc((size_t)fd->VariableArray.VariableCount * sizeof(Variable));
 	if (fd->VariableArray.Variables == NULL) {
 		errormsg(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Variable array allocating error", fd->Filename);
 		Destroy_ATRC_FD(fd);
@@ -98,7 +98,7 @@ PATRC_FD CPP_ATRC_FD::ToCStruct() {
 
 	counter = 0, counter2 = 0;
 	fd->BlockArray.BlockCount = (uint64_t)this->Blocks.size();
-	fd->BlockArray.Blocks = (PBlock)malloc(fd->BlockArray.BlockCount * sizeof(Block));
+	fd->BlockArray.Blocks = (PBlock)malloc((size_t)fd->BlockArray.BlockCount * sizeof(Block));
 	if (fd->BlockArray.Blocks == NULL) {
 		errormsg(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Block array allocating error", fd->Filename);
 		Destroy_ATRC_FD(fd);
@@ -587,7 +587,7 @@ PROXY_ATRC_FD PROXY_ATRC_FD::operator[](const std::string& subKey) {
 }
 
 PROXY_ATRC_FD::operator const char*() const {
-    uint64_t x = key.find("]");
+    size_t x = key.find("]");
     try {
         if (x == std::string::npos) {
             std::string res_str = fd->ReadVariable(key);
@@ -622,7 +622,7 @@ PROXY_ATRC_FD::operator const char*() const {
 }
 
 PROXY_ATRC_FD::operator std::string() const {
-	uint64_t x = key.find("]");
+	size_t x = key.find("]");
     try {
 		if (x == std::string::npos) {
 			return fd->ReadVariable(key);
@@ -639,7 +639,7 @@ PROXY_ATRC_FD::operator std::string() const {
     return "";
 }
 PROXY_ATRC_FD& PROXY_ATRC_FD::operator=(const std::string& value) {
-    uint64_t x = key.find("]");
+    size_t x = key.find("]");
     try {
         if (x == std::string::npos) {
             if(fd->GetWriteCheck() || fd->DoesExistVariable(key)) {
@@ -661,7 +661,7 @@ PROXY_ATRC_FD& PROXY_ATRC_FD::operator=(const std::string& value) {
 
 
 PROXY_ATRC_FD& PROXY_ATRC_FD::operator>>(const std::string& value) {
-    uint64_t x = key.find("]");
+    size_t x = key.find("]");
     if (x == std::string::npos) {
         std::string existing = fd->ReadVariable(key);
         fd->ModifyVariable(key, existing + value);

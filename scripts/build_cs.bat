@@ -6,7 +6,9 @@ call "global.bat"
 cd ..
 cd Wrappers\C#
 
-if not exist lib mkdir lib
+if not exist lib rmdir /S /Q lib
+mkdir lib\Windows
+mkdir lib\Linux
 echo Copying libraries to lib directory...
 XCOPY %OUTPUT_DIR%\Windows\* lib\Windows\ /E /I /Y
 XCOPY %OUTPUT_DIR%\Linux\* lib\Linux\ /E /I /Y

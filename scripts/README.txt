@@ -41,3 +41,12 @@ build_lua.bat
     - WSL distro can be changed inside the script. Default: debian
     - WSL Distro should have CMake, Ninja and C compiler installed
     - See Wrappers\Lua\README.md for prequsities on the libraries that need to be found here
+
+
+Tools:
+
+build_gui.bat
+    - Build GUI into its own release package
+    - Following are required to be installed and found in the path: CMake, 7z, debian, C/C++ compiler
+    - WSL distro can be changed inside the script. Default: debian
+    - WSL Distro should have CMake, Ninja and C compiler installed

@@ -1,4 +1,16 @@
-﻿# Add executable for testing
+﻿cmake_minimum_required(VERSION 3.12)
+
+
+if(NOT WIN32)
+    set(CMAKE_C_COMPILER "clang")
+    set(CMAKE_CXX_COMPILER "clang++")
+    set(CMAKE_LINKER "ld.lld")
+    set(CMAKE_LINKER_FLAGS "-v")
+endif()
+
+project(ATRC.Test)
+
+# Add executable for testing
 add_executable(ATRC.Test
     "ATRC.Test.c"
     "ATRC.Test.cpp"
@@ -10,16 +22,19 @@ if (POLICY CMP0141)
     set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-# Link the test executable with the ATRC library
-target_link_libraries(ATRC.Test PRIVATE ATRC)
+
 
 # Set include directories (if needed)
 
 message(STATUS "SOURCE DIR: ${PROJECT_SOURCE_DIR}")
-include_directories(
-    "${PROJECT_SOURCE_DIR}/ATRC/include"
-    "${PROJECT_SOURCE_DIR}/Wrappers/C++/include"
-)
+set(ATRC_DIR "${PROJECT_SOURCE_DIR}/libs/ATRC/cmake")
+find_package(ATRC REQUIRED)
+message(STATUS "ATRC_INCLUDE_DIR = ${ATRC_INCLUDE_DIR}")
+message(STATUS "ATRC_LIB_RELEASE = ${ATRC_LIB_RELEASE}")
+message(STATUS "ATRC_LIB_DEBUG = ${ATRC_LIB_DEBUG}")
+message(STATUS "ATRC_DLL_RELEASE = ${ATRC_DLL_RELEASE}")
+message(STATUS "ATRC_DLL_DEBUG = ${ATRC_DLL_DEBUG}")
+target_link_libraries(ATRC.Test PRIVATE ATRC::ATRC)
 
 # Set C++ standard for tests (if CMake version is greater than 3.12)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
@@ -27,70 +42,3 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
-
-# Enable testing
-enable_testing()
-
-# For MSVC Debugging
-if (MSVC)
-    message(STATUS "Copying ATRC DLLs to binary directory")
-    add_custom_command(
-        TARGET ATRC.Test POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        "${CMAKE_BINARY_DIR}/ATRC/Debug/ATRC.dll"
-        "${CMAKE_BINARY_DIR}/ATRC.Test/Debug/ATRC.dll"
-        COMMENT "Copying ATRC DLLs to binary directory"
-    )
-endif()
-# Copy the test.atrc file to the binary directory
-add_custom_command(
-    TARGET ATRC.Test POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    "${CMAKE_CURRENT_SOURCE_DIR}/test.atrc"
-    "${CMAKE_BINARY_DIR}/ATRC.Test/test.atrc"
-    COMMENT "Copying test.atrc to binary directory"
-)
-
-
-
-# Add the custom test targets
-add_custom_target(run_tests
-    COMMAND "${CMAKE_BINARY_DIR}/ATRC.Test/ATRC.Test"
-    DEPENDS "ATRC.Test" "ATRC"
-    COMMENT "Running tests for ATRC"
-)
-
-# If you want the test target to be built by default when invoking `make`, set it as a default target
-add_dependencies(run_tests ATRC.Test ATRC)
-
-# On windows, copy dlls to the test directory
-if (WIN32)
-    add_custom_command(
-        TARGET run_tests POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        "${CMAKE_BINARY_DIR}/ATRC/Debug/ATRC.dll"
-        "${CMAKE_BINARY_DIR}/ATRC.Test/Debug/ATRC.dll"
-        COMMENT "Copying ATRC DLLs to test directory"
-    )
-    add_custom_command(
-        TARGET run_tests POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        "${CMAKE_BINARY_DIR}/ATRC/Debug/ATRC.lib"
-        "${CMAKE_BINARY_DIR}/ATRC.Test/Debug/ATRC.lib"
-        COMMENT "Copying ATRC LIBs to test directory"
-    )
-    add_custom_command(
-        TARGET run_tests POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        "${CMAKE_BINARY_DIR}/ATRC/Debug/ATRC.pdb"
-        "${CMAKE_BINARY_DIR}/ATRC.Test/Debug/ATRC.pdb"
-        COMMENT "Copying ATRC PDBs to test directory"
-    )
-    add_custom_command(
-        TARGET run_tests POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        "${CMAKE_BINARY_DIR}/ATRC/Debug/ATRC.exp"
-        "${CMAKE_BINARY_DIR}/ATRC.Test/Debug/ATRC.exp"
-        COMMENT "Copying ATRC EXPs to test directory"
-    )
-endif()

@@ -45,23 +45,30 @@ C# binding                                              2.3.1   DONE
 C++ binding                                             2.3.1   DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-2.3.2
-Fixes to filesaving and other parts of the core library 2.3.2   DONE
-Lua binding                                             2.3.2   DONE
+2.3.2_4d
+Fixes to filesaving and other parts of the core library 2.3_4d  DONE
+Lua binding                                             2.3_4d  DONE
+Updated C# and Lua bindings                             2.3_4d  DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-2.3.3
-.IGNORE -> {TD}. .IGNORE TD, Ignore 'till definition    2.3.3   WIP
-stdlib: replace all %*% with "str" or 'c'               2.3.3   WIP
-atrc_replace_injects_c   -> Docs (Free memory ATRC_FREE_MEMORY) 2.3.3   WIP
-atrc_replace_injects_str -> Docs (Free memory ATRC_FREE_MEMORY) 2.3.3   WIP
-Nested if-statements                                    2.3.3   WIP
-.DEFINE name=value                                      2.3.3   DONE
-.UNDEF name                                             2.3.3   DONE
-Access definition in .ATRC                              2.3.3   WIP
-.LOGS -> Access .DEFINES                                2.3.3   WIP
+2.4_x
+
+Fixed core library so that it runs on Linux             2.4_x   DONE
+Fixed lua wrapper so that it runs on Linux              2.4_x   DONE
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2.x_x
+.IGNORE -> {TD}. .IGNORE TD, Ignore 'till definition    2.x_x   WIP
+stdlib: replace all %*% with "str" or 'c'               2.x_x   WIP
+atrc_replace_injects_c   -> Docs (Free memory ATRC_FREE_MEMORY) 2.x_x   WIP
+atrc_replace_injects_str -> Docs (Free memory ATRC_FREE_MEMORY) 2.x_x   WIP
+Nested if-statements                                    2.x_x   WIP
+.DEFINE name=value                                      2.x_x   DONE
+.UNDEF name                                             2.x_x   DONE
+Access definition in .ATRC                              2.x_x   WIP
+.LOGS -> Access .DEFINES                                2.x_x   WIP
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-2.4.0
-Loops / Functions                                       2.4.0   WIP
+2.x_x
+Loops / Functions                                       2.x_x   WIP

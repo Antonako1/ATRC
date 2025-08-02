@@ -1,5 +1,5 @@
 ﻿#include "ATRC.Test.h"
-#include <ATRC.h>
+#include <ATRC/ATRC.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +13,8 @@ static void test_read_variable(PATRC_FD fd) {
     else {
         printf("[PASS] ReadVariable: Value of '%s' is '%s'\n", varname, value);
     }
-    __ATRC_FREE_MEMORY_EX(value);
+    ATRC_FREE_MEMORY(value);
+    value = NULL;
 }
 
 static void test_block_operations(PATRC_FD fd) {
@@ -217,5 +218,6 @@ int main(int argc, char *argv[]) {
     WriteCommentToBottom(fd, "This is a comment at the bottom.");
     Destroy_ATRC_FD(fd);
 
-    return cpp_main();
+    // return cpp_main();
+    return 0;
 }

@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_DEPRECATE
-#include "./include/ATRC.h"
+#include "./include/ATRC/ATRC.h"
 #include "./include/filer.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -124,7 +124,7 @@ bool AddBlock(PATRC_FD fd, const char* blockname) {
         return false;
     }
 
-	size_t new_count = fd->BlockArray.BlockCount + 1;
+	size_t new_count = (size_t)fd->BlockArray.BlockCount + 1;
     if(new_count > SIZE_MAX / sizeof(Block)) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Block array size exceeds maximum", fd->Filename);
         return false;
@@ -143,7 +143,7 @@ bool AddBlock(PATRC_FD fd, const char* blockname) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Block name allocating error", fd->Filename);
 		
         // Realloc to shrink the array
-        PBlock shrinked = (PBlock)realloc(fd->BlockArray.Blocks, fd->BlockArray.BlockCount * sizeof(Block));
+        PBlock shrinked = (PBlock)realloc(fd->BlockArray.Blocks, (size_t)fd->BlockArray.BlockCount * sizeof(Block));
         if (shrinked != NULL || fd->BlockArray.BlockCount == 0) {
             fd->BlockArray.Blocks = shrinked;
         }
@@ -202,7 +202,7 @@ bool RemoveBlock(PATRC_FD fd, const char* blockname) {
 		fd->BlockArray.Blocks[i] = fd->BlockArray.Blocks[i + 1];
 	}
 
-	size_t new_count = fd->BlockArray.BlockCount - 1;
+	size_t new_count = (size_t)fd->BlockArray.BlockCount - 1;
 	PBlock temp = (PBlock)realloc(fd->BlockArray.Blocks, new_count * sizeof(Block));
     if (temp == NULL && new_count > 0) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Block array realloc error", fd->Filename);
@@ -223,7 +223,7 @@ bool AddVariable(PATRC_FD fd, const char* varname, const char* value) {
         return false;
 	}
 
-    size_t new_count = fd->VariableArray.VariableCount + 1;
+    size_t new_count = (size_t)fd->VariableArray.VariableCount + 1;
     if(new_count > SIZE_MAX / sizeof(Variable)) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Variable array size exceeds maximum", fd->Filename);
         return false;
@@ -240,7 +240,7 @@ bool AddVariable(PATRC_FD fd, const char* varname, const char* value) {
     if(new_var->Name == NULL) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Variable name allocating error", fd->Filename);
         // Realloc to shrink the array
-        PVariable shrinked = (PVariable)realloc(fd->VariableArray.Variables, fd->VariableArray.VariableCount * sizeof(Variable));
+        PVariable shrinked = (PVariable)realloc(fd->VariableArray.Variables, (size_t)fd->VariableArray.VariableCount * sizeof(Variable));
         if(shrinked != NULL || fd->VariableArray.VariableCount == 0) {
             fd->VariableArray.Variables = shrinked;
         } else {
@@ -286,7 +286,7 @@ bool RemoveVariable(PATRC_FD fd, const char* varname) {
     for (size_t i = index; i < fd->VariableArray.VariableCount - 1; i++) {
         fd->VariableArray.Variables[i] = fd->VariableArray.Variables[i + 1];
 	}
-    size_t new_count = fd->VariableArray.VariableCount - 1;
+    size_t new_count = (size_t)fd->VariableArray.VariableCount - 1;
     PVariable temp = (PVariable)realloc(fd->VariableArray.Variables, new_count * sizeof(Variable));
     if (temp == NULL && new_count > 0) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Variable array realloc error", fd->Filename);
@@ -364,7 +364,7 @@ bool AddKey(PATRC_FD fd, const char* block, const char* key, const char* value) 
         return false;
     }
     PBlock blk = &fd->BlockArray.Blocks[block_index];
-    size_t new_count = blk->KeyArray.KeyCount + 1;
+    size_t new_count = (size_t)blk->KeyArray.KeyCount + 1;
     if(new_count > SIZE_MAX / sizeof(Key)) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Key array size exceeds maximum", fd->Filename);
         return false;
@@ -380,7 +380,7 @@ bool AddKey(PATRC_FD fd, const char* block, const char* key, const char* value) 
     if(new_key->Name == NULL) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Key name allocating error", fd->Filename);
         // Realloc to shrink the array
-        PKey shrinked = (PKey)realloc(blk->KeyArray.Keys, blk->KeyArray.KeyCount * sizeof(Key));
+        PKey shrinked = (PKey)realloc(blk->KeyArray.Keys, (size_t)blk->KeyArray.KeyCount * sizeof(Key));
         if(shrinked != NULL || blk->KeyArray.KeyCount == 0) {
             blk->KeyArray.Keys = shrinked;
         } else {
@@ -393,7 +393,7 @@ bool AddKey(PATRC_FD fd, const char* block, const char* key, const char* value) 
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Key value allocating error", fd->Filename);
         __ATRC_FREE_MEMORY_EX(new_key->Name);
 
-        PKey shrinked = (PKey)realloc(blk->KeyArray.Keys, blk->KeyArray.KeyCount * sizeof(Key));
+        PKey shrinked = (PKey)realloc(blk->KeyArray.Keys, (size_t)blk->KeyArray.KeyCount * sizeof(Key));
         if (shrinked != NULL || blk->KeyArray.KeyCount == 0) {
             blk->KeyArray.Keys = shrinked;
         }
@@ -451,7 +451,7 @@ bool RemoveKey(PATRC_FD fd, const char* block, const char* key) {
     for (size_t i = index; i < blk->KeyArray.KeyCount - 1; i++) {
         blk->KeyArray.Keys[i] = blk->KeyArray.Keys[i + 1];
     }
-    size_t new_count = blk->KeyArray.KeyCount - 1;
+    size_t new_count = (size_t)blk->KeyArray.KeyCount - 1;
     PKey temp = (PKey)realloc(blk->KeyArray.Keys, new_count * sizeof(Key));
     if (temp == NULL && new_count > 0) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Key array realloc error", fd->Filename);
@@ -642,7 +642,7 @@ PATRC_FD Copy_ATRC_FD(PATRC_FD fd) {
     }
 
     copy->BlockArray.BlockCount = fd->BlockArray.BlockCount;
-    copy->BlockArray.Blocks = (PBlock)malloc(copy->BlockArray.BlockCount * sizeof(Block));
+    copy->BlockArray.Blocks = (PBlock)malloc((size_t)copy->BlockArray.BlockCount * sizeof(Block));
     if (copy->BlockArray.Blocks == NULL) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Block array allocating error", copy->Filename);
         Destroy_ATRC_FD(copy);
@@ -658,7 +658,7 @@ PATRC_FD Copy_ATRC_FD(PATRC_FD fd) {
         }
         dest_block->line_number = src_block->line_number;
         dest_block->KeyArray.KeyCount = src_block->KeyArray.KeyCount;
-        dest_block->KeyArray.Keys = (PKey)malloc(dest_block->KeyArray.KeyCount * sizeof(Key));
+        dest_block->KeyArray.Keys = (PKey)malloc((size_t)dest_block->KeyArray.KeyCount * sizeof(Key));
         if (dest_block->KeyArray.Keys == NULL) {
             _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Key array allocating error", copy->Filename);
             Destroy_ATRC_FD(copy);
@@ -683,7 +683,7 @@ PATRC_FD Copy_ATRC_FD(PATRC_FD fd) {
     }
 
     copy->VariableArray.VariableCount = fd->VariableArray.VariableCount;
-    copy->VariableArray.Variables = (PVariable)malloc(copy->VariableArray.VariableCount * sizeof(Variable));
+    copy->VariableArray.Variables = (PVariable)malloc((size_t)copy->VariableArray.VariableCount * sizeof(Variable));
     if (copy->VariableArray.Variables == NULL) {
         _ATRC_WRAP_ERRORMSG(ERR_MEMORY_ALLOCATION_FAILED, __LINE__, "Variable array allocating error", copy->Filename);
         Destroy_ATRC_FD(copy);

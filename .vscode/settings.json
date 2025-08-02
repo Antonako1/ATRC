@@ -93,6 +93,8 @@
         "variant": "cpp",
         "xpolymorphic_allocator.h": "cpp",
         "cstdbool": "c",
-        "legacy.h": "cpp"
+        "legacy.h": "cpp",
+        "imgui_impl_glfw.h": "cpp",
+        "imgui.h": "cpp"
     }
 }
