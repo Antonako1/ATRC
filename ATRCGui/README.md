@@ -1,4 +1,4 @@
-# ATRC Gui editor for ATRC 2.4
+# ATRC Gui editor for ATRC 2.4_x
 
 Graphical user interface editor for ATRC files
 

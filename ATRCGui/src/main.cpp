@@ -5,7 +5,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include <GLFW/glfw3.h> // Include GLFW
+#include <GLFW/glfw3.h>
 
 // Error callback for GLFW
 static void glfw_error_callback(int error, const char* description)
@@ -13,8 +13,20 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
-int main(int, char**)
+int main(int argc, char** argv)
 {
+    // Check if ImGui is compiled with OpenGL3 support
+    if (!ImGui_ImplOpenGL3_Init("#version 130")) {
+        fprintf(stderr, "Failed to initialize ImGui OpenGL3 backend\n");
+        return 1;
+    }
+
+    // Initialize GLFW
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        return 1;
+    }
+
     // Setup GLFW error callback
     glfwSetErrorCallback(glfw_error_callback);
     
