@@ -23,3 +23,7 @@ jobs:
           cmake -S . -B build \
             -G Ninja \
             -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-linux-x64.cmake \
+            
+      - name: Build project
+        run: |
+          cmake --build build
