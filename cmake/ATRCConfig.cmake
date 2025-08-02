@@ -7,7 +7,6 @@
 #   add_executable(MyProject main.cpp)
 #   
 #   target_link_libraries(MyProject PRIVATE ATRC::ATRC)
-
 set(ATRC_FOUND TRUE)
 set(ATRC_VERSION 2.3)
 
@@ -23,7 +22,7 @@ endif()
 
 # Platform-specific logic
 if(WIN32)
-    if(${ATRC_ARCH} STREQUAL "x86")
+    if("${ATRC_ARCH}" STREQUAL "x86")
         set(ATRC_ARCH "Win32")
     endif()
     set(ATRC_LIB_DIR "${ATRC_ROOT}/Windows/${ATRC_ARCH}")
@@ -34,22 +33,16 @@ if(WIN32)
     set(ATRC_LIB_RELEASE "${ATRC_LIB_RELEASE_DIR}/ATRC.lib")
     set(ATRC_DLL_DEBUG "${ATRC_LIB_DEBUG_DIR}/ATRC.dll")
     set(ATRC_DLL_RELEASE "${ATRC_LIB_RELEASE_DIR}/ATRC.dll")
-
 elseif(UNIX)
+    # Keep x64 unchanged for Unix
     set(ATRC_LIB_DIR "${ATRC_ROOT}/Linux/${ATRC_ARCH}")
     set(ATRC_LIB_DEBUG "${ATRC_LIB_DIR}/Debug/libATRC.so")
     set(ATRC_LIB_RELEASE "${ATRC_LIB_DIR}/Release/libATRC.so")
+    set(ATRC_DLL_DEBUG "${ATRC_LIB_DEBUG_DIR}/libATRC.so")
+    set(ATRC_DLL_RELEASE "${ATRC_LIB_RELEASE_DIR}/libATRC.so")
 else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
-# Create and import targets
+# Import targets file that creates ATRC::ATRC imported target
 include("${CMAKE_CURRENT_LIST_DIR}/ATRCTargets.cmake")
-
-# Export variables
-set(ATRC_INCLUDE_DIR "${ATRC_INCLUDE_DIR}")
-set(ATRC_LIB_DEBUG "${ATRC_LIB_DEBUG}")
-set(ATRC_LIB_RELEASE "${ATRC_LIB_RELEASE}")
-set(ATRC_DLL_DEBUG "${ATRC_DLL_DEBUG}")
-set(ATRC_DLL_RELEASE "${ATRC_DLL_RELEASE}")
-set(ATRC_ARCH "${ATRC_ARCH}")
