@@ -19,7 +19,7 @@ cd ..
 REM Define subdirectories for the file structure
 mkdir "%OUTPUT_DIR%\cmake"
 mkdir "%OUTPUT_DIR%\docs"
-mkdir "%OUTPUT_DIR%\include"
+mkdir "%OUTPUT_DIR%\include\ATRC"
 mkdir "%OUTPUT_DIR%\Linux\x64\Debug"
 mkdir "%OUTPUT_DIR%\Linux\x64\Release"
 mkdir "%OUTPUT_DIR%\Windows\x64\Debug"
@@ -39,8 +39,10 @@ ECHO Building for Linux...
 cd "%PROJECT_ROOT%\scripts"
 call %WSL_DISTRO% run "./build_linux.sh"
 
+@REM exit /b %errorlevel%
+
 REM Copy include files
-copy "%PROJECT_ROOT%\ATRC\include\ATRC.h" "%OUTPUT_DIR%\include\ATRC" /Y
+copy "%PROJECT_ROOT%\ATRC\include\ATRC\ATRC.h" "%OUTPUT_DIR%\include\ATRC\ATRC.h" /Y
 
 REM Copy CMake configuration
 copy "%PROJECT_ROOT%\cmake\ATRCConfig.cmake" "%OUTPUT_DIR%\cmake" /Y
@@ -67,7 +69,7 @@ copy "%PROJECT_ROOT%\README.md" "%OUTPUT_DIR%" /Y
 
 
 ECHO Starting C++ packaging...
-copy "%PROJECT_ROOT%\Wrappers\C++\include\ATRC.hpp" "%OUTPUT_DIR%\include" /Y
+copy "%PROJECT_ROOT%\Wrappers\C++\include\ATRC\ATRC.hpp" "%OUTPUT_DIR%\include\ATRC\ATRC.hpp" /Y
 ECHO C++ package can be found in "%OUTPUT_DIR%\ATRC.hpp"
 
 REM Compress the output folder into various formats
