@@ -46,11 +46,15 @@ C++ binding                                             2.3.1   DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 2.3.2_4d
-Fixes to filesaving and other parts of the core library 2.3   DONE
-Lua binding                                             2.3   DONE
+Fixes to filesaving and other parts of the core library 2.3_4d  DONE
+Lua binding                                             2.3_4d  DONE
+Updated C# and Lua bindings                             2.3_4d  DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-2.4_
+2.4_x
+
+Fixed core library so that it runs on Linux             2.4_x   DONE
+Fixed lua wrapper so that it runs on Linux              2.4_x   DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 2.x_x
