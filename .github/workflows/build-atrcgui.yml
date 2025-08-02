@@ -1,0 +1,32 @@
+name: Build ATRCGui on Linux
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            clang lld cmake ninja-build \
+            libglfw3-dev libgl1-mesa-dev xorg-dev
+      
+      - name: Navigate to ATRCGui directory
+        run: cd ATRCGui
+
+      - name: Configure CMake
+        run: |
+          cmake -S . -B build \
+            -G Ninja
+
+      - name: Build
+        run: cmake --build build
