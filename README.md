@@ -32,7 +32,9 @@ Or build from source:
 mkdir build && cd build
 cmake .. -DATRC_BUILD_TESTS=OFF
 cmake --build .
-````
+```
+
+To built the release packages, you need to use a Windows computer. See .\scripts\ for more information
 
 ---
 
