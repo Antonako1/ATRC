@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_DEPRECATE
-#include "./include/ATRC.h"
+#include "./include/ATRC/ATRC.h"
 #include "./include/filer.h"
 #include <iostream>
 #include <string>
@@ -342,21 +342,22 @@ double MathParser::evaluateRPN(const std::vector<MathToken>& rpn) {
         if (token.type == MATH_TOKEN_TYPE::NUMBER) {
             stack.push(std::get<double>(token.value));
         } else {
-            MATH_OPERATOR_TYPE op = std::get<MATH_OPERATOR_TYPE>(token.value);
+            size_t op = (size_t)std::get<MATH_OPERATOR_TYPE>(token.value);
 
-            if (stack.size() < (op == MATH_OPERATOR_TYPE::SQRT || op == MATH_OPERATOR_TYPE::LOG ? 1 : 2)) {
+            size_t required_operands = (op == (size_t)MATH_OPERATOR_TYPE::SQRT || op == (size_t)MATH_OPERATOR_TYPE::LOG) ? 1u : 2u;
+            if (stack.size() < required_operands) {
                 errormsg(ERR_INVALID_EXPRESSION, -1, "Insufficient operands for operator: " + std::to_string(static_cast<int>(op)), "atrc_stdlib");
                 return 0.0; // Return a default value on error
             }
             double b = stack.top(); stack.pop();
             double a = (stack.empty() ? 0 : stack.top());
-            if (op != MATH_OPERATOR_TYPE::SQRT && op != MATH_OPERATOR_TYPE::LOG) stack.pop();
+            if (op != (size_t)MATH_OPERATOR_TYPE::SQRT && op != (size_t)MATH_OPERATOR_TYPE::LOG) stack.pop();
 
             switch (op) {
-                case MATH_OPERATOR_TYPE::ADD: stack.push(a + b); break;
-                case MATH_OPERATOR_TYPE::SUBTRACT: stack.push(a - b); break;
-                case MATH_OPERATOR_TYPE::MULTIPLY: stack.push(a * b); break;
-                case MATH_OPERATOR_TYPE::DIVIDE: 
+                case (size_t)MATH_OPERATOR_TYPE::ADD: stack.push(a + b); break;
+                case (size_t)MATH_OPERATOR_TYPE::SUBTRACT: stack.push(a - b); break;
+                case (size_t)MATH_OPERATOR_TYPE::MULTIPLY: stack.push(a * b); break;
+                case (size_t)MATH_OPERATOR_TYPE::DIVIDE: 
                     if (b == 0) {
                         errormsg(ERR_INVALID_EXPRESSION, -1, "Division by zero " + std::to_string(a) + " / " + std::to_string(b), "atrc_stdlib");
                         return 0.0; // Return a default value on error
@@ -366,26 +367,26 @@ double MathParser::evaluateRPN(const std::vector<MathToken>& rpn) {
                         stack.push(res);
                     } 
                     break;
-                case MATH_OPERATOR_TYPE::MODULO: 
+                case (size_t)MATH_OPERATOR_TYPE::MODULO: 
                     if (b == 0) {
                         errormsg(ERR_INVALID_EXPRESSION, -1, "Modulo by zero " + std::to_string(a) + " % " + std::to_string(b), "atrc_stdlib");
                         return 0.0; // Return a default value on error
                     }
                     stack.push(fmod(a, b)); 
                     break;
-                case MATH_OPERATOR_TYPE::POWER: stack.push(pow(a, b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::POWER: stack.push(pow(a, b)); break;
 
-                case MATH_OPERATOR_TYPE::SQRT: stack.push(sqrt(b)); break;
-                case MATH_OPERATOR_TYPE::ABS: stack.push(fabs(b)); break;
-                case MATH_OPERATOR_TYPE::LOG: stack.push(log(b)); break;
-                case MATH_OPERATOR_TYPE::LOG10: stack.push(log10(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::SQRT: stack.push(sqrt(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::ABS: stack.push(fabs(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::LOG: stack.push(log(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::LOG10: stack.push(log10(b)); break;
 
-                case MATH_OPERATOR_TYPE::SIN: stack.push(sin(b)); break;
-                case MATH_OPERATOR_TYPE::COS: stack.push(cos(b)); break;
-                case MATH_OPERATOR_TYPE::TAN: stack.push(tan(b)); break;
-                case MATH_OPERATOR_TYPE::ASIN: stack.push(asin(b)); break;
-                case MATH_OPERATOR_TYPE::ACOS: stack.push(acos(b)); break;
-                case MATH_OPERATOR_TYPE::ATAN: stack.push(atan(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::SIN: stack.push(sin(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::COS: stack.push(cos(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::TAN: stack.push(tan(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::ASIN: stack.push(asin(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::ACOS: stack.push(acos(b)); break;
+                case (size_t)MATH_OPERATOR_TYPE::ATAN: stack.push(atan(b)); break;
 
                 default:
                     errormsg(ERR_INVALID_EXPRESSION, -1, "Unknown operator: " + std::to_string(static_cast<int>(op)), "atrc_stdlib");

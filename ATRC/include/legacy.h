@@ -117,7 +117,7 @@ public:
     PROXY_ATRC_FD& operator>>(const char* value);
 
 	inline friend std::ostream& operator<<(std::ostream& os, const PROXY_ATRC_FD& obj) {
-        uint64_t x = obj.key.find("]");
+        size_t x = obj.key.find("]");
         if(x == std::string::npos) os << obj.fd->ReadVariable(obj.key);
         else {
             std::string block = obj.key.substr(0, x);

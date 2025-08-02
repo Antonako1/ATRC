@@ -22,7 +22,7 @@ Maintained at https://github.com/Antonako1/ATRC
 #   ifdef ATRC_EXPORTS
 #       define ATRC_API __attribute__((visibility("default")))
 #   else
-#       define ATRC_API __attribute__((visibility("hidden")))
+#       define ATRC_API
 #   endif
 
 #elif defined(_MSC_VER) || defined(_WIN32) // MSVC or Windows
@@ -36,7 +36,7 @@ Maintained at https://github.com/Antonako1/ATRC
 #   ifdef ATRC_EXPORTS
 #       define ATRC_API __attribute__((visibility("default")))
 #   else
-#       define ATRC_API __attribute__((visibility("hidden")))
+#       define ATRC_API
 #   endif
 
 #else

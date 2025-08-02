@@ -1188,6 +1188,10 @@ void _W_Save_(CPP_ATRC_FD *filedata, const ATRC_SAVE &action, const int &xtra_in
             std::string trim_line = line;
             trim(trim_line);
             if(trim_line[0] == '%'){
+                if(var_found){
+                    final_data += line + "\n";
+                    continue;
+                }
                 size_t equ_pos = trim_line.find_first_of('=');
                 std::string variable_name = trim_line.substr(0, equ_pos);
                 trim(variable_name);
