@@ -30,7 +30,7 @@ Get prebuilt binaries for Windows (x64/x86) and Linux (x64) from the [Releases](
 Or build from source:
 ```bash
 mkdir build && cd build
-cmake .. -DATRC_BUILD_TESTS=OFF
+cmake ..
 cmake --build .
 ```
 
