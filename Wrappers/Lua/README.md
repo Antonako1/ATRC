@@ -22,9 +22,23 @@ Prebuilt package contents include:
 
 To use ATRC in Lua:
 
- - Create a "libs" directory
- - Copy ATRC.dll and ATRCLua.dll or libATRC.so and libATRCLua.so to there
- - Add the libs directory into environmental variables "PATH" and "LUA_CPATH"
+ - Download ATRCLua from [Releases](https://github.com/Antonako1/ATRC/releases)
+ - Extract it into your project folder
+ - Change directory into your extracted ATRCLua directory
+ - Windows:
+    - Set libs/ATRC into your "PATH" environmental variable
+    - Set libs/ATRCLua into your "LUA_CPATH" environmental variable
+```cmd
+SET "LUA_CPATH=%CD%\libs\ATRCLua\ATRCLua.dll;%LUA_CPATH%"
+SET "PATH=%CD%\libs\ATRC\ATRC.dll;%PATH%"
+```
+ - Linux
+    - Set libs/ATRC into your LD_LIBRARY_PATH environmental variable
+    - Set libs/ATRCLua into your LUA_CPATH environmental variable
+```bash
+export LD_LIBRARY_PATH="$(pwd)/libs/ATRC/libATRC.so:$LD_LIBRARY_PATH"
+export LUA_CPATH="$(pwd)/libs/ATRCLua/ATRCLua.so;$LUA_CPATH"
+```
 
 ```lua
 local m = require("ATRCLua")

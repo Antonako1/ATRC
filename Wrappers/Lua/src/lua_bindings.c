@@ -1,4 +1,4 @@
-#include <ATRC/ATRC.h>
+#include "../libs/ATRC/include/ATRC/ATRC.h"
 #include "../libs/Lua/include/lua.h"
 #include "../libs/Lua/include/lauxlib.h"
 #include "../libs/Lua/include/lualib.h"
@@ -195,7 +195,7 @@ int lua_InsertVars(lua_State *L) {
     // is a table
     // Get the number of elements in the table
     lua_len(L, 2);  // Push the length of the table onto the stack
-    int n = lua_tointeger(L, -1);  // Get the length
+    int n = (int)lua_tointeger(L, -1);  // Get the length
     lua_pop(L, 1);  // Pop the length from the stack
     const char **args = (const char **)malloc((n + 1) * sizeof(const char *));
     if (!args) {

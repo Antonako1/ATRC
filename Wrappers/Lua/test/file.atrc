@@ -1,4 +1,6 @@
 #!ATRC
+#This is a comment at the top.
+
 
 
 %testVar%=QUQU
@@ -7,3 +9,4 @@
 [ReadyBlock]
 ReadyKey=%testVar%. KEY!
 Inserts=%*%, %*%
+#This is a comment at the bottom.

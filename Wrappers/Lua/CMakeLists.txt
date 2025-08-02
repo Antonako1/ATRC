@@ -16,10 +16,12 @@ if(MSVC)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif()
 
-add_compile_definitions(ATRC_EXPORTS)
+# remove the "lib" prefix from the output name
+set_target_properties(ATRCLua PROPERTIES PREFIX "")
+set_target_properties(ATRCLua PROPERTIES OUTPUT_NAME "ATRCLua")
 
 # include the ATRC library
-set(ATRC_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/ATRC/cmake")
+set(ATRC_DIR "${CMAKE_SOURCE_DIR}/libs/ATRC/cmake")
 find_package(ATRC REQUIRED)
 target_link_libraries(ATRCLua PRIVATE ATRC::ATRC)
 if(WIN32)
@@ -42,3 +44,10 @@ endif()
 target_include_directories(ATRCLua PRIVATE 
     "${LUA_DIR}/include"
 )
+
+message(STATUS "ATRC_INCLUDE_DIR: ${ATRC_INCLUDE_DIR}")
+message(STATUS "ATRC_LIB_DEBUG: ${ATRC_LIB_DEBUG}")
+message(STATUS "ATRC_LIB_RELEASE: ${ATRC_LIB_RELEASE}")
+message(STATUS "ATRC_DLL_DEBUG: ${ATRC_DLL_DEBUG}")
+message(STATUS "ATRC_DLL_RELEASE: ${ATRC_DLL_RELEASE}")
+message(STATUS "ATRC_ARCH: ${ATRC_ARCH}")
