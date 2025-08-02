@@ -16,20 +16,30 @@ cmake --build build --config Release
 
 
 set OUTPUT_DIR=%PROJECT_ROOT%\ATRCLua-%VERSION%_%BUILD_VERSION%
+rmdir /S /Q "%OUTPUT_DIR%"
 mkdir %OUTPUT_DIR%
 
 mkdir %OUTPUT_DIR%\libs
-COPY /Y/B build\Release\ATRCLua.dll %OUTPUT_DIR%\libs\ATRCLua.dll
+mkdir %OUTPUT_DIR%\libs\ATRCLua
+mkdir %OUTPUT_DIR%\libs\ATRC
+
+COPY /Y/B build\Release\ATRCLua.dll %OUTPUT_DIR%\libs\ATRCLua\ATRCLua.dll
 
 rmdir /S/Q build
 mkdir build
 call "%WSL_DISTRO%" run "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release"
-copy /Y/B build/libATRCLua.so %OUTPUT_DIR%\libs\libATRCLua.so
+
+:: Copy using powershell for Linux compatibility
+powershell -Command "Copy-Item -Path build/ATRCLua.so -Destination '%OUTPUT_DIR%\libs\ATRCLua\ATRCLua.so'"
+
 
 mkdir %OUTPUT_DIR%\example
 rmdir /S/Q test\libs
 XCOPY test %OUTPUT_DIR%\example /E /I /Y
 
+
+copy .\libs\ATRC\Linux\x64\Release\ATRC.so %OUTPUT_DIR%\libs\ATRC\ATRC.so
+copy .\libs\ATRC\Windows\x64\Release\ATRC.dll %OUTPUT_DIR%\libs\ATRC\ATRC.dll
 
 copy /Y .\README.md %OUTPUT_DIR%\README.md
 
