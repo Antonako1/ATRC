@@ -38,7 +38,7 @@ rmdir /S/Q test\libs
 XCOPY test %OUTPUT_DIR%\example /E /I /Y
 
 
-copy .\libs\ATRC\Linux\x64\Release\ATRC.so %OUTPUT_DIR%\libs\ATRC\ATRC.so
+copy .\libs\ATRC\Linux\x64\Release\libATRC.so %OUTPUT_DIR%\libs\ATRC\libATRC.so
 copy .\libs\ATRC\Windows\x64\Release\ATRC.dll %OUTPUT_DIR%\libs\ATRC\ATRC.dll
 
 copy /Y .\README.md %OUTPUT_DIR%\README.md
