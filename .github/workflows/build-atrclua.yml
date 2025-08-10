@@ -24,10 +24,10 @@ jobs:
         working-directory: Wrappers/Lua
         run: |
           # Download and extract ATRC
-          wget https://github.com/Antonako1/ATRC/releases/download/vATRC-2.4_66/ATRC-2.4_66.7z
-          7z x ATRC-2.4_66.7z
-          rm ATRC-2.4_66.7z
-          mv ATRC-2.4_66 ATRC
+          wget https://github.com/Antonako1/ATRC/releases/download/vATRC-3.0_66/ATRC-3.0_66.7z
+          7z x ATRC-3.0_66.7z
+          rm ATRC-3.0_66.7z
+          mv ATRC-3.0_66 ATRC
 
           # Download and extract Lua
           wget https://sourceforge.net/projects/luabinaries/files/5.4.2/Linux%20Libraries/lua-5.4.2_Linux68_64_lib.tar.gz/download -O lua.tar.gz

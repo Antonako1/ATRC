@@ -8,7 +8,7 @@ ATRC is a high-performance, extensible configuration library for **C**, with off
 
 ## Features
 
-- **Preprocessor Engine**: Conditional logic, includes, raw strings, and logging
+- **Preprocessor Engine**: Conditional logic, includes, and logging
 - **Variable System**: Global, private, and injected variables
 - **Cross-Platform**: Windows and Linux support with architecture flags
 - **Lightweight & Fast**: Written in C with minimal dependencies
@@ -46,7 +46,7 @@ project(MyProject LANGUAGES C)
 
 add_executable(MyProject main.c)
 
-set(ATRC_DIR "path/to/ATRC-2.4_{BUILD}/cmake")
+set(ATRC_DIR "path/to/ATRC-3.0_{BUILD}/cmake")
 find_package(ATRC REQUIRED)
 target_link_libraries(MyProject PRIVATE ATRC::ATRC)
 ```

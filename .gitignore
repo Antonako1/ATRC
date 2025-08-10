@@ -7,6 +7,8 @@ lib/
 ATRC/Readme.txt
 ATRC/License.txt
 nupkg/
+*.exe
+*.elf
 *.nupkg
 out/
 !ATRC-c_cpp/ATRC.Test/libs

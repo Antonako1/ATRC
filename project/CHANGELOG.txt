@@ -51,10 +51,10 @@ Lua binding                                             2.3_4d  DONE
 Updated C# and Lua bindings                             2.3_4d  DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-2.4_x
+3.0_x
 
-Fixed core library so that it runs on Linux             2.4_x   DONE
-Fixed lua wrapper so that it runs on Linux              2.4_x   DONE
+Fixed core library so that it runs on Linux             3.0_x   DONE
+Fixed lua wrapper so that it runs on Linux              3.0_x   DONE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 2.x_x

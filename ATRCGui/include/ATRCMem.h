@@ -15,8 +15,5 @@ Maintained at https://github.com/Antonako1/ATRC/ATRCGui
 #define ATRCMEM_H
 #include <ATRC.h>
 
-class ATRCMem {
-
-};  
 
 #endif // ATRCMEM_H

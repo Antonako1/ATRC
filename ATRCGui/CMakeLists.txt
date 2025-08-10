@@ -1,58 +1,39 @@
 cmake_minimum_required(VERSION 3.12)
 
-project("ATRCGui" C CXX)
+project("ATRCGui" C)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Set C standard
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # Executable source
 add_executable(ATRCGui
     "${CMAKE_SOURCE_DIR}/src/main.cpp"
+    "${CMAKE_SOURCE_DIR}/src/ATRCGui.cpp"
 )
 
-# ATRC lib (assuming find_package works)
-set(ATRC_DIR "${CMAKE_SOURCE_DIR}/libs/ATRC/cmake")
-find_package(ATRC REQUIRED)
-target_link_libraries(ATRCGui PRIVATE ATRC::ATRC)
+# ATRC library
+add_subdirectory("${CMAKE_SOURCE_DIR}/../ATRC" "${CMAKE_BINARY_DIR}/ATRC-build")
+target_link_libraries(ATRCGui PRIVATE ATRC)
 
 # GLFW
 set(GLFW_DIR "${CMAKE_SOURCE_DIR}/libs/glfw")
 set(GLFW_INCLUDE_DIR "${GLFW_DIR}/include")
-set(GLFW_LIB_DIR "${GLFW_DIR}/lib")  # make sure this matches your directory name
+set(GLFW_LIB_DIR "${GLFW_DIR}/lib")
 
 target_include_directories(ATRCGui PRIVATE "${GLFW_INCLUDE_DIR}")
 target_link_directories(ATRCGui PRIVATE "${GLFW_LIB_DIR}")
 target_link_libraries(ATRCGui PRIVATE glfw3)
 
-# ImGui sources
-set(IMGUI_DIR "${CMAKE_SOURCE_DIR}/libs/imgui")
-set(IMGUI_SOURCES
-    ${IMGUI_DIR}/imgui.cpp
-    ${IMGUI_DIR}/imgui_draw.cpp
-    ${IMGUI_DIR}/imgui_tables.cpp
-    ${IMGUI_DIR}/imgui_widgets.cpp
-    ${IMGUI_DIR}/imgui_demo.cpp
-    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
-    ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
-)
+# Nuklear
+set(NUKLEAR_DIR "${CMAKE_SOURCE_DIR}/libs/nuklear")
+set(NUKLEAR_INCLUDE_DIR "${NUKLEAR_DIR}/include")
 
-add_library(imgui STATIC ${IMGUI_SOURCES})
-target_include_directories(imgui PUBLIC
-    ${IMGUI_DIR}
-    ${IMGUI_DIR}/backends
-    ${GLFW_INCLUDE_DIR}
-)
-
-target_link_libraries(imgui PUBLIC glfw3)
+target_include_directories(ATRCGui PRIVATE "${NUKLEAR_INCLUDE_DIR}")
 
 # OpenGL
 find_package(OpenGL REQUIRED)
-target_link_libraries(imgui PUBLIC OpenGL::GL)
-target_link_libraries(ATRCGui PRIVATE imgui OpenGL::GL)
+target_link_libraries(ATRCGui PRIVATE OpenGL::GL)
 
-# Also include ImGui headers in your app
-target_include_directories(ATRCGui PRIVATE
-    ${IMGUI_DIR}
-    ${IMGUI_DIR}/backends
-)
-
+# Project includes
+target_include_directories(ATRCGui PRIVATE "${CMAKE_SOURCE_DIR}/include")

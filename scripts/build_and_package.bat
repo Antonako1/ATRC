@@ -20,13 +20,37 @@ REM Define subdirectories for the file structure
 mkdir "%OUTPUT_DIR%\cmake"
 mkdir "%OUTPUT_DIR%\docs"
 mkdir "%OUTPUT_DIR%\include\ATRC"
-mkdir "%OUTPUT_DIR%\Linux\x64\Debug"
-mkdir "%OUTPUT_DIR%\Linux\x64\Release"
-mkdir "%OUTPUT_DIR%\Windows\x64\Debug"
-mkdir "%OUTPUT_DIR%\Windows\x64\Release"
-mkdir "%OUTPUT_DIR%\Windows\Win32\Release"
-mkdir "%OUTPUT_DIR%\Windows\Win32\Debug"
+mkdir "%OUTPUT_DIR%\libs\Linux\x64\Debug"
+mkdir "%OUTPUT_DIR%\libs\Linux\x64\Release"
+mkdir "%OUTPUT_DIR%\libs\Windows\x64\Debug"
+mkdir "%OUTPUT_DIR%\libs\Windows\x64\Release"
+mkdir "%OUTPUT_DIR%\libs\Windows\Win32\Release"
+mkdir "%OUTPUT_DIR%\libs\Windows\Win32\Debug"
 
+:: Output tree:
+:: OUTPUT_DIR
+:: ├── cmake
+:: │   ├── ATRCConfig.cmake
+:: │   └── ATRCTargets.cmake
+:: ├── docs
+:: │   └── docs files...
+:: ├── include
+:: │   └── ATRC
+:: │       └── ATRC.h
+:: │       └── ATRC.hpp
+:: └── libs
+::     ├── Linux
+::     │   ├── x64
+::     │   │   ├── Debug
+::     │   │   └── Release
+::     └── Windows
+::         ├── x64
+::         │   ├── Debug
+::         │   └── Release
+::         └── Win32
+::           ├── Debug
+::           └── Release
+REM Set the project root directory
 
 REM Compile Windows builds
 cd "%PROJECT_ROOT%\scripts"
